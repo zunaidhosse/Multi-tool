@@ -1,0 +1,585 @@
+:root {
+    --bg-color: #1E1E2F;
+    --text-color: #EAEAEA;
+    --header-bg: #2B2D42;
+    --accent-color: #FFD700;
+    --tool-card-bg: #3A3D5B;
+    --button-hover-color: #E6C200;
+    --box-shadow-color: rgba(255, 215, 0, 0.2);
+    --border-radius: 8px;
+    --transition-speed: 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+header {
+    background-color: var(--header-bg);
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+header h1 {
+    margin: 0;
+    color: var(--accent-color);
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+main {
+    flex-grow: 1;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    justify-content: center; /* Center items in the grid */
+    padding-bottom: 2rem;
+}
+
+.tool-card {
+    background-color: var(--tool-card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push button to bottom */
+    min-height: 220px; /* Ensure consistent card height */
+}
+
+.tool-card:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 25px var(--box-shadow-color);
+}
+
+.tool-card h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--text-color); /* Default */
+    transition: color var(--transition-speed);
+}
+
+.tool-card:hover h2 {
+    color: var(--bg-color); /* On hover */
+}
+
+.tool-card p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    flex-grow: 1; /* Allow description to take space */
+}
+
+.tool-card button {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.1s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Make button full width */
+    max-width: 200px; /* Limit max width */
+    margin: 0 auto; /* Center button */
+}
+
+.tool-card button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.tool-card button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.tool-icon {
+    margin-bottom: 1rem;
+    color: var(--accent-color); /* Default icon color */
+    transition: color var(--transition-speed);
+}
+
+.tool-card:hover .tool-icon {
+    color: var(--bg-color); /* Icon color on hover */
+}
+
+.tool-icon svg {
+    width: 60px;
+    height: 60px;
+    stroke-width: 2; /* Adjust stroke thickness for outline icons */
+}
+.tool-icon svg path, .tool-icon svg rect, .tool-icon svg circle, .tool-icon svg line, .tool-icon svg polyline {
+    stroke: currentColor; /* Inherit color from parent */
+    fill: none; /* Default to no fill for outline icons */
+}
+/* Specific icons that need fill */
+.tool-icon.icon-image-converter svg path:first-child,
+.tool-icon.icon-compressor svg path,
+.tool-icon.icon-color-picker svg circle {
+    fill: currentColor;
+    stroke: none;
+}
+
+
+/* Responsive Grid Layout */
+@media (min-width: 1024px) { /* Desktop */
+    .tool-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) { /* Tablet */
+    .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) { /* Mobile */
+    .tool-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem; /* Adjust padding for mobile */
+    }
+    header h1 {
+        font-size: 2rem;
+    }
+    .tool-card {
+        padding: 1rem;
+        min-height: auto;
+    }
+    .tool-card h2 {
+        font-size: 1.5rem;
+    }
+    .tool-card p {
+        font-size: 0.9rem;
+    }
+    .tool-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed), visibility var(--transition-speed);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--tool-card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform var(--transition-speed);
+    width: 100%; /* Ensure content adapts to modal width */
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-content h2 {
+    color: var(--accent-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.modal-close-button:hover {
+    color: var(--accent-color);
+}
+
+/* General form/input styling within modals */
+.tool-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.tool-section input[type="text"],
+.tool-section input[type="number"],
+.tool-section input[type="file"],
+.tool-section input[type="date"],
+.tool-section textarea,
+.tool-section select {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #555;
+    border-radius: var(--border-radius);
+    background-color: #2F3247; /* Darker input background */
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+/* Style for file input button part */
+.tool-section input[type="file"]::file-selector-button {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tool-section input[type="file"]::file-selector-button:hover {
+    background-color: var(--button-hover-color);
+}
+
+
+.tool-section input[type="range"] {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.tool-section input[type="text"]:focus,
+.tool-section input[type="number"]:focus,
+.tool-section textarea:focus,
+.tool-section select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.tool-section button {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.1s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 1rem;
+    margin-right: 10px; /* Spacing between buttons */
+    margin-bottom: 1rem;
+}
+
+.tool-section button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.tool-section button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.tool-output {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #2F3247;
+    border-radius: var(--border-radius);
+    border: 1px dashed #555;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all; /* For long text outputs */
+    text-align: center;
+}
+
+.tool-output.error {
+    background-color: #5b2f2f;
+    border-color: #ff0000;
+    color: #ffdddd;
+}
+
+/* Specific styles for tool UIs */
+#imageConverterOutput img,
+#imageCropperPreview img,
+#imageCropperOutput img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    display: block; /* Remove extra space below image */
+    margin: 1rem auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+#imageConverterCanvas,
+#imageCompressorCanvas,
+#imageCropperCanvas {
+    border: 1px dashed #555;
+    background-color: #2F3247;
+    border-radius: var(--border-radius);
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%; /* Ensure canvas is responsive */
+    height: auto;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+.checkbox-group label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 0; /* Override default margin */
+    margin-bottom: 0;
+}
+.checkbox-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: auto;
+    margin-bottom: 0;
+    accent-color: var(--accent-color); /* Style checkbox itself */
+}
+
+.tool-section .flex-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    align-items: flex-end; /* Align inputs to bottom */
+    margin-bottom: 1rem;
+}
+
+.tool-section .flex-group > div {
+    flex: 1; /* Distribute space */
+    min-width: 150px; /* Prevent shrinking too much */
+}
+
+.tool-section .flex-group label {
+    margin-bottom: 0.5rem;
+}
+
+.tool-section .flex-group input,
+.tool-section .flex-group select {
+    margin-bottom: 0; /* Remove default input margin */
+}
+
+.tool-section .range-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.tool-section .range-group input[type="range"] {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+.tool-section .range-group span {
+    min-width: 30px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+#qrCodeCanvas {
+    background-color: white; /* QR codes need a light background */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    display: block;
+    margin: 1rem auto;
+}
+.qr-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.qr-actions button {
+    margin-right: 10px;
+}
+    
+#colorPreview {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--accent-color);
+    margin: 1rem auto;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+.color-output-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.color-output-grid div {
+    background-color: #2F3247;
+    padding: 0.8rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.color-output-grid span {
+    display: block;
+    font-weight: 400;
+    color: #ccc;
+    font-size: 0.8rem;
+}
+
+/* Timer/Stopwatch specific */
+#timerDisplay, #stopwatchDisplay {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    background-color: #2F3247;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+.timer-controls, .stopwatch-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.timer-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.timer-input-group input {
+    width: 80px;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+.timer-input-group span {
+    font-size: 1.2rem;
+    align-self: center;
+    color: var(--text-color);
+}
+
+/* Message Box */
+.message-box-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.message-box-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.message-box {
+    background-color: var(--tool-card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.message-box-overlay.show .message-box {
+    transform: scale(1);
+}
+
+.message-box h3 {
+    color: var(--accent-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.message-box p {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.message-box button {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.message-box button:hover {
+    background-color: var(--button-hover-color);
+}
